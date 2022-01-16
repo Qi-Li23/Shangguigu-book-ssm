@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>图书管理</title>
+	<link type="text/css" rel="stylesheet" th:href="@{/static/css/style.css}" >
+    <script type="text/javascript" th:src="@{/static/script/jquery-1.7.2.js}"></script>
+</head>
+<body>
+
+    <div id="header">
+        <img class="logo_img" alt="" th:src="@{/static/img/logo.gif}" >
+        <span class="wel_word">图书管理系统</span>
+        <div>
+            <a th:href="@{/book/}">图书管理</a>
+            <a th:href="@{/manager/order}">订单管理</a>
+            <a th:href="@{/}">返回商城</a>
+        </div>
+    </div>
+	
+	<div id="main">
+		<table>
+			<tr>
+				<td>名称</td>
+				<td>价格</td>
+				<td>作者</td>
+				<td>销量</td>
+				<td>库存</td>
+				<td colspan="2">操作</td>
+			</tr>		
+			<tr th:each="book : ${books}">
+				<td th:text="${book.name}"></td>
+				<td th:text="${book.price}"></td>
+				<td th:text="${book.author}"></td>
+				<td th:text="${book.sales}"></td>
+				<td th:text="${book.stock}"></td>
+				<td>
+					<a th:href="@{'/book/' + ${book.id}}">修改</a>
+				</td>
+				<td><a th:href="@{'/book/' + ${book.id}}" class="deleteA">删除</a></td>
+			</tr>
+			
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><a th:href="@{/book/add}">添加图书</a></td>
+			</tr>	
+		</table>
+
+        <form id="deleteForm" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+        </form>
+
+        <script type="text/javascript">
+            $(function () {
+                //给删除的a标签绑定单击事件
+                $("a.deleteA").click(function () {
+                    //获取表单元素的dom对象
+                    var deleteForm =  $("#deleteForm")[0];
+                    deleteForm.action = this.href;
+                    var flag = confirm("你确定要删除【" + $(this).parent().parent().find("td:first").text() + "】吗?");
+                    //true-表示点击了确认，false表示取消
+                    if(flag) {
+                        deleteForm.submit();
+                    }
+                    //取消a标签的默认行为
+                    return false;
+                })
+            })
+        </script>
+
+	</div>
+	
+	<div id="bottom">
+		<span>
+			尚硅谷书城.Copyright &copy;2015
+		</span>
+	</div>
+</body>
+</html>

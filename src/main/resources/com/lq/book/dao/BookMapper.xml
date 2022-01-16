@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lq.book.dao.BookMapper">
+    <!--List<Book> queryBooks();-->
+    <select id="queryBooks" resultType="com.lq.book.bean.Book">
+        select * from t_book
+    </select>
+    
+    <!--Integer addBook(Book book);-->
+    <insert id="addBook">
+        insert into t_book(`name`, `price`, `author`, `sales`, `stock`, `img_path`)
+        values(#{name}, #{price}, #{author}, #{sales}, #{stock}, #{imgPath})
+    </insert>
+    
+    <!--Integer deleteBookById(Integer id);-->
+    <delete id="deleteBookById">
+        delete from t_book where id = #{id}
+    </delete>
+
+    <!--Book queryBookById(Integer id);-->
+    <select id="queryBookById" resultType="com.lq.book.bean.Book">
+        select * from t_book where id = #{id}
+    </select>
+
+    <!--Integer updateBook(Book book);-->
+    <update id="updateBook">
+        update t_book set
+        `name`=#{name}, `price`=#{price}, `author`=#{author},
+        `sales`=#{sales}, `stock`=#{stock}, `img_path`=#{imgPath}
+        where id = #{id}
+    </update>
+
+</mapper>

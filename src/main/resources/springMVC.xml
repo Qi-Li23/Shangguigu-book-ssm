@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--springMVC只是控制网页跳转逻辑-->
+
+    <!--开启组件扫描，但是只扫描Controller组件-->
+    <context:component-scan base-package="com.lq.book" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <mvc:view-controller path="/" view-name="index"/>
+    <mvc:view-controller path="/user/login" view-name="user/login"/>
+    <mvc:view-controller path="/user/login_success" view-name="user/login_success"/>
+    <mvc:view-controller path="/user/regist" view-name="user/regist"/>
+    <mvc:view-controller path="/user/regist_success" view-name="user/regist_success"/>
+    <mvc:view-controller path="/order" view-name="order/order"/>
+    <mvc:view-controller path="/cart" view-name="cart/cart"/>
+    <mvc:view-controller path="/manager" view-name="manager/manager"/>
+<!--    <mvc:view-controller path="/manager/book" view-name="manager/book_manager"/>-->
+    <mvc:view-controller path="/manager/order" view-name="manager/order_manager"/>
+    
+    <mvc:view-controller path="/book/add" view-name="manager/book_edit"/>
+    <mvc:annotation-driven/>
+
+    <!--处理静态资源-->
+    <mvc:default-servlet-handler/>
+
+    <!--配置Thymeleaf视图解析器-->
+    <bean id="thymeleafViewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="characterEncoding" value="UTF-8"/>
+        <property name="order" value="1"/>
+        <property name="templateEngine">
+            <bean class="org.thymeleaf.spring5.SpringTemplateEngine">
+                <property name="templateResolver">
+                    <bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+                        <property name="prefix" value="/WEB-INF/pages/"/>
+                        <property name="suffix" value=".html"/>
+                        <property name="templateMode" value="HTML"/>
+                        <property name="characterEncoding" value="UTF-8"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+</beans>
